@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-wallet #текстовый идентификатор (Обязателен)
+      author: Artem Nikolaev # автор (Обязателен)
+      changes:
+        - createTable: # создаем новую таблицу
+            tableName: wallet
+            columns: # объявления колонок
+              - column:
+                  name: id
+                  type: UUID
+
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: balance
+                  type: double
+                  constraints:
+                    nullable: false
+

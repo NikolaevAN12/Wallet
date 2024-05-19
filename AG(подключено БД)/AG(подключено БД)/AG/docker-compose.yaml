@@ -1,0 +1,17 @@
+version: '1.1'
+services:
+  app:
+    container_name: my-wallet
+    image: nikolaevan12/wallet:1.1
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:14.3
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=1
+      - POSTGRES_USER=postgres
