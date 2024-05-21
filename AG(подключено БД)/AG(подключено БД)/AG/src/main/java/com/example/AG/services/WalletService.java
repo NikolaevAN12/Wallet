@@ -4,12 +4,14 @@ package com.example.AG.services;
 import com.example.AG.dto.OperationDto;
 import com.example.AG.models.Wallet;
 import com.example.AG.repositories.WalletRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.platform.commons.util.Preconditions;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 import java.util.UUID;
@@ -44,7 +46,7 @@ public class WalletService {
         return wallet.getBalance();
     }
 
-
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void operation(OperationDto.Operation operation) {
         Wallet wallet = walletRepository.findById(operation.getWalletId()).orElseThrow();
         if (operation.getOperationType().equals(OperationDto.OperationType.DEPOSIT)) {
@@ -55,8 +57,9 @@ public class WalletService {
         }
         walletRepository.save(wallet);
     }
+    }
 
 
-}
+
 
 

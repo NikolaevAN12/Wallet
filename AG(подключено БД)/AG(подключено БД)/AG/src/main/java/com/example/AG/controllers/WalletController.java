@@ -8,6 +8,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -59,15 +61,6 @@ public class WalletController {
 
     }
 
-    @ExceptionHandler(Exception.class)
-    private Object getException(Exception ex) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        Map<String, String> body = new HashMap<>();
-        body.put("timestamp", String.valueOf(System.currentTimeMillis()));
-        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.toString());
-        body.put("message", ex.getMessage());
-        return new ResponseEntity<>(body, headers, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
 }
+
 
